@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+<style>
+    .card-body{
+        background-color: rgb(0, 0, 0);
+    }
+    body{
+        background-color: black;
+    }
+</style>
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+
+    <div class="container py-5 h-100">
+       
+       
+      
+
+
+
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card shadtext-centerow-2-strong" style="border-radius: 1rem;">
+              <div class="card-body p-5 text-center">
+                {% if messages %}
+                <ul class="messages" style="list-style: none;">
+                    {% for message in messages %}
+                    <strong><li  {% if message.tags %} class=" {{ message.tags }} " {% endif %}> {{ message }} </li></strong>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+                <h3 class="mb-5" style="color: aliceblue;">Signup</h3>
+                <form action="{% url 'signup' %}" method="post" id="formvdn" onsubmit="return validation()">
+                  {% csrf_token %}
+                  <div class="error"></div>
+
+
+                  <label class="form-label mb-3 error">
+                    
+                  </label>
+
+                  
+                  <div class="form-outline mb-4">
+                    <input type="text" id="typeEmailX-21" class="form-control form-control-lg" name="username" />
+                    <label class="form-label" for="typeEmailX-2"style="color: aliceblue;">Username</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="password" id="psw" class="form-control form-control-lg" name="password" />
+                    <label class="form-label" for="typePasswordX-2"style="color: aliceblue;">Password</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input type="password" id="cpsw" class="form-control form-control-lg" name="repass" />
+                    <label class="form-label" for="typePasswordX-2"style="color: aliceblue;">Confirm Password</label>
+                  </div>
+
+                  <div style="margin-top: 7px;" id="CheckPasswordMatch"></div>
+                  <br>
+
+
+                  <button class="btn btn-warning btn-lg btn-block" type="submit">Register</button>
+                  <p class="small fw-bold mt-2 pt-1 mb-0">Have an account? <a href="{% url 'userlogin' %}"
+                      class="link-danger" >Login</a></p>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+
+      $(function () {
+
+
+        $("#formvdn").validate({
+          rules: { // to define rules
+            fullname: {
+              required: true,
+              minlength: 4,
+              maxlength: 20,
+              namevalidation: true
+            },
+            password: {
+              required: true,
+              minlength: 3
+
+            },
+            
+            repassword: {
+              required: true,
+              equalTo: "#psw"
+            }
+
+          },
+          messages: { // to define custom messages
+            fullname: {
+              required: "Please enter your name",
+              minlength: "At least 4 characters required",
+              maxlength: "Maximum 20 characters are allowed"
+            },
+            password: {
+              required: "Enter Your Password",
+              minlength: "Enter Atleast 3 Characters"
+            },
+            repassword: "Again Enter Your Correct Password"
+          },
+
+          submitHandler: function (form) {
+            if ($(form).valid())
+              form.submit();
+            return false; // prevent normal form posting
+          }
+
+        })
+        $.validator.addMethod("namevalidation", function (value, element) {
+          return /^[a-zA-Z ]*$/.test(value);
+        },
+          "Sorry..! Only alphabets are allowed"
+        );
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#cpsw").on('keyup', function () {
+          var password = $("#psw").val();
+          var confirmPassword = $("#cpsw").val();
+          if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Password does not match !").css("color", "red");
+          else
+            $("#CheckPasswordMatch").html("Password match !").css("color", "green");
+        });
+      });
+
+
+
+    </script>
+
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
